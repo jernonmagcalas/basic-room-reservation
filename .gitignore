@@ -1,4 +1,4 @@
 config/front/databases.php
 config/front/pages.php
-config/front/setttings.php
+config/front/settings.php
 vendor/*
