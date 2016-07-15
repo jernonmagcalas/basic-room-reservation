@@ -1,0 +1,290 @@
+<div class="container">
+	<h1>Reserve Room</h1>
+	<hr>
+	<form class="form-horizontal" method="post">
+		<div class="form-group">
+			<label for="reservation_type" class="col-sm-2 control-label">Guest Name</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="reservation_name" name="guest">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="reservation_type" class="col-sm-2 control-label">Reservation Type</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="reservation_type" name="reservation_type" placeholder="Agoda, Expedia, Walk-in, Referred, Recurring">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-checkin" class="col-sm-2 control-label">Check In</label>
+			<div class="col-sm-10">
+				<input type="date" class="form-control" id="room-checkin" name="room_checkin">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-checkout" class="col-sm-2 control-label">Check Out</label>
+			<div class="col-sm-10">
+				<input type="date" class="form-control" id="room-checkout" name="room_checkout">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-type" class="col-sm-2 control-label">Room Type</label>
+			<div class="col-sm-10">
+				<select id="room-type" class="form-control" name="room_type">
+					<option value="">Select Room Type</option>
+					<option value="beach-double">Beach Front Double Room</option>
+					<option value="beach-family">Beach Front Family Room</option>
+					<option value="nonbeach-double">Non-Beach Front Double Room</option>
+					<option value="nonbeach-family">Non-Beach Front Family Room</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-name" class="col-sm-2 control-label">Room</label>
+			<div class="col-sm-10" id="rooms">
+				<select class="form-control" name="room_id" id="room-id" disabled>
+					<option value="">-- Please Select Room Type --</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-pax" class="col-sm-2 control-label">Pax</label>
+			<div class="col-sm-10">
+				<input type="number" class="form-control" id="room-pax" placeholder="number of person to occupy the room" name="room_pax">
+			</div>
+		</div>
+		<div class="form-group" id="discount">
+			<label for="discount" class="col-sm-2 control-label">Discount</label>
+            <div class="col-sm-10">
+                <input type="number" name="discount" class="form-control" id="diskwento" value="0">
+            </div>
+        </div>
+		<div class="form-group" id="total">
+			<label for="room-pax" class="col-sm-2 control-label">Total</label>
+			<div class="col-sm-10 text-center">
+				<div id="calculations"></div>
+				<h1><span>P </span> <span>0</span></h1>
+			</div>
+		</div>
+		<div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success form-control disabled" id="reserve">Add Reservation</button>
+            </div>
+        </div>
+        <div class="hide" id="price"></div>
+	</form>
+</div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-title"></h4>
+      </div>
+      <div class="modal-body" id="modal-message">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">okay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	// $('#total').hide();
+	// $('#room-type').on('change', function(e) {
+	// 	var type = $('#room-type').val();
+	// 	$('#total').hide();
+	// 	$.get("/rooms", { room_type: type, restype: 'json' })
+	// 		.done( function(data) {
+	// 			data = JSON.parse(data);
+				
+	// 			$('#room-identity').html('<select class="form-control" name="room_id" id="room-id"><option> Select Rooms</options></select>');
+	// 			for (var i = 0; i < data.length; i++) {
+	// 				$('#room-id').append($('<option>', { 
+	// 			        value: data[i].room_id,
+	// 			        text : data[i].room_name
+	// 			    }));
+	// 			};
+
+	// 		});
+	// });
+
+	// $('body').on('change', '#room-id', function(e) {
+	// 	var id = $('#room-id').val();
+
+	// 	$.get("/rooms", { room_id: id, restype: 'json' })
+	// 		.done( function(data) {
+	// 			data = JSON.parse(data);
+	// 			$('#room-pax').attr('max', data[0].room_max);
+
+	// 			$('#price').html(
+	// 				'<span id="charged">' + data[0].room_min + '</span>' +
+	// 				'<span id="high-price">' + data[0].room_price_high + '</span>' +
+	// 				'<span id="low-price">' + data[0].room_price_low + '</span>'
+	// 				);
+
+	// 			$('#price').append('<span id="add">'+ data[0].room_additional +'</span>');
+	// 		});
+	// });
+
+	// $('body').on('change', 'input, select', function(e) {
+	// 	addReservation();
+	// });
+
+	// var addReservation = function() {
+	// 	var checkin = $('#room-checkin').val();
+	// 	var checkout = $('#room-checkout').val();
+	// 	var type = $('#room-type').val();
+	// 	var name = $('#room-id').val();
+	// 	var pax = $('#room-pax').val();
+	// 	var max = $('#room-pax').attr('max');
+	// 	var min = parseInt($('#charged').text());
+	// 	var addCharge = parseInt($('#add').text());
+	// 	var discount = $('#diskwento').val();
+
+	// 	var chin = new Date(checkin);
+	// 	var chout = new Date(checkout);
+	// 	var today = new Date();
+
+	// 	if((chin.getDate() - today.getDate()) < 0 ||
+	// 		(chin.getMonth() - today.getMonth()) < 0 ||
+	// 		(chin.getYear() - today.getYear()) < 0 ) {
+	// 		$('#modal-title').html('Error!');
+	// 		$('#modal-message').html('check-in date has already passed! You can only reserve a room from today onwards!');
+	// 		$('#modal').modal('show');
+	// 		$('#total').hide();
+	// 		$('#reserve').removeClass('disabled').addClass('disabled');
+	// 	}
+
+	// 	if(pax > max) {
+	// 		$('#modal-title').html('Error!');
+	// 		$('#modal-message').html('pax is greater than max pax!');
+	// 		$('#modal').modal('show');
+	// 		$('#total').hide();
+	// 		$('#reserve').removeClass('disabled').addClass('disabled');
+	// 		return;
+	// 	}
+
+	// 	if(chout.getTime() - chin.getTime() < 0) {
+	// 		$('#modal-title').html('Error!');
+	// 		$('#modal-message').html('Check-out date should be ahead of check-in date');
+	// 		$('#modal').modal('show');
+	// 		$('#total').hide();
+	// 		$('#reserve').removeClass('disabled').addClass('disabled');
+	// 		return;
+	// 	}
+
+	// 	if(checkin && checkout
+	// 		&& type && name
+	// 		&& pax) {
+
+	// 		var oneDay = 24*60*60*1000;
+	// 		var days = Math.round(Math.abs((chin.getTime() - chout.getTime())/(oneDay)));
+	// 		var month = chin.getMonth() + 1;
+
+	// 		var price = $('#high-price').text();
+	// 		if(month >= 6 && month <= 10 ) {
+	// 			var price = $('#low-price').text();
+	// 		}
+
+	// 		var addtnl = 0;
+
+	// 		if(pax - min > 0) {
+	// 			addtnl = (pax - min) * addCharge;
+	// 		}
+
+	// 		var total = ((parseInt(price) + addtnl) * days) - discount;
+	// 		var charged = min - pax > 0 ? pax : min; 
+
+	// 		var calc = '<div>P' + price + '/night for ' + charged + ' pax.</div>';
+	// 		if(addtnl) {
+	// 			calc += '<div>P' + addCharge + '/night for ' + (pax - min) + ' pax.</div>';
+	// 		} 
+
+	// 		calc += '<div> - ' + discount + ' discount</div>';
+
+	// 		calc += '<div>' + days + ' days </div>';
+
+	// 		$('#total .col-sm-10 #calculations').html(calc);
+	// 		$('#total .col-sm-10 h1 span:last').html(total);
+	// 		$('#total').show();
+			
+	// 		if(total) {
+	// 			$('#reserve').removeClass('disabled');
+	// 		}
+	// 	} else {
+	// 		$('#reserve').removeClass('disabled').addClass('disabled');
+	// 	}
+	// };
+
+
+(function ($) {
+	var FormClass = function() {
+		this.__construct();
+		this.__listen();
+	};
+
+	// on page load execution
+	FormClass.prototype.__construct = function () {
+		this.roomType = $('#room-type');
+		this.rooms = $('#room-id');
+	};
+
+	// define events
+	FormClass.prototype.__listen = function () {
+		// when select room type is changed
+		// we will load the list of rooms
+		this.roomType.change(this.loadRooms.bind(this));
+
+		$('form').on('change', 'select, input', this.formChange.bind(this));
+		// this.calculate();
+	};
+
+	// load the rooms based on room type selected
+	FormClass.prototype.loadRooms = function (e) {
+		var type = $(e.target).val();
+
+		// clear the list
+		var option = this.rooms.find('option:first-child');
+		this.rooms.html(option);
+		
+		// if room type is empty
+		if (!type) {
+			// disable the select option for rooms
+			this.rooms.prop('disabled', true);
+			return false;
+		}
+
+		// enabled the select room
+		this.rooms.prop('disabled', false);
+
+		// parameters for the ajax
+		var params = {
+			'room_type' : type,
+			'restype' : 'json'
+		};
+
+		// get the rooms in the api
+		$.get("/rooms", params, function(result) {
+			// population the select element of rooms
+			$.each(result, function (key, val) {
+				var option = $('<option>')
+					.val(val.room_id)
+					.html(val.room_name);
+
+				// append the option in the select
+				this.rooms.append(option);
+			}.bind(this));
+		}.bind(this), 'json');
+	};
+
+	// FormClass.prototype. = function (e) {
+
+	// }
+
+	new FormClass();
+
+})(jQuery);
+
+</script>

@@ -1,0 +1,22 @@
+<style type="text/css">
+	.room {
+		border: 1px solid #ccc;
+	    height: 120px;
+	    margin: 15px;
+	    padding: 20px;
+	    text-align: center;
+	    width: 250px;
+	}
+	.room > span { display: block; }
+</style>
+
+<div class="container">
+	<?php foreach ($rooms as $room) :?>
+	<div class="room pull-left<?php //echo $room['occupied'] ? ' occupied': '' ?>">
+		<span class="room-name"><?php echo $room['room_name']; ?></span>
+		<span class="room-type"><?php echo $room['room_type']; ?></span>
+		<span class="room-price">P<?php echo $room['room_price_low']; ?> / P<?php echo $room['room_price_high']; ?></span>		
+		<span class="room-pax"><?php echo $room['room_min'].'-'.$room['room_max']; ?> pax</span>
+	</div>
+	<?php endforeach; ?>
+</div>

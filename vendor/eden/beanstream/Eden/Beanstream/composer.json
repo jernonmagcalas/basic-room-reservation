@@ -1,0 +1,22 @@
+{
+    "name": "eden/beanstream",
+    "type": "library",
+    "description": "Eden beanstream component",
+    "keywords": ["eden", "library"],
+    "homepage": "http://eden-php.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mark Yrral Orpilla",
+            "email": "marko.Orpilla@yahoo.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.1",
+		"eden/core": "1.*"
+    },
+    "autoload": {
+         "psr-0": { "Eden\\Beanstream": "" }
+    },
+	"target-dir": "Eden/Beanstream"
+}

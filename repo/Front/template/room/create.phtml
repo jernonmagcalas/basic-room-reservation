@@ -1,0 +1,96 @@
+<style type="text/css">
+	/*.col-sm-10 .control-label { color: #f00; font-size: 11px; font-weight: normal; }*/
+</style>
+<div class="container">
+	<h1>Create Room</h1>
+	<hr>
+	<form class="form-horizontal" method="post">
+		<div class="form-group">
+			<label for="room-name" class="col-sm-2 control-label">Room Identity</label>
+			<div class="col-sm-10<?php if(isset($errors['room_name'])): ?> has-error<?php endif; ?>">
+				<?php if(isset($errors['room_name'])): ?> <label class="control-label"> <?php echo $errors['room_name']; ?> </label> <?php endif; ?>
+				<input type="text" 
+					class="form-control" 
+					id="room-name" 
+					placeholder="Room Name/Number" 
+					name="room_name" 
+					value="<?php if(isset($data['room_name'])){ echo $data['room_name']; } ?>">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-type" class="col-sm-2 control-label">Room Type</label>
+			<div class="col-sm-10<?php if(isset($errors['room_type'])): ?> has-error<?php endif; ?>">
+				<?php if(isset($errors['room_type'])): ?> <label class="control-label"> <?php echo $errors['room_type']; ?> </label> <?php endif; ?>
+				<select id="room-type" class="form-control" name="room_type">
+					<option>Select Room Type</option>
+					<option value="beach-double">Beach Front Double Room</option>
+					<option value="beach-family">Beach Front Family Room</option>
+					<option value="nonbeach-double">Non-Beach Front Double Room</option>
+					<option value="nonbeach-family">Non-Beach Front Family Room</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-night" class="col-sm-2 control-label">Price per night</label>
+			<div class="col-sm-5<?php if(isset($errors['room_price_low'])): ?> has-error<?php endif; ?>">
+				<?php if(isset($errors['room_price_low'])): ?> <label class="control-label"> <?php echo $errors['room_price_low']; ?> </label> <?php endif; ?>
+				<input type="number" 
+					class="form-control" 
+					id="room-night" 
+					placeholder="Price/Night for Off-Season" 
+					name="room_price_low" 
+					value="<?php if(isset($data['room_price_low'])){ echo $data['room_price_low']; } ?>">
+			</div>
+			<div class="col-sm-5<?php if(isset($errors['room_price_high'])): ?> has-error<?php endif; ?>">
+				<?php if(isset($errors['room_price_high'])): ?> <label class="control-label"> <?php echo $errors['room_price_high']; ?> </label> <?php endif; ?>
+				<input type="number" 
+					class="form-control" 
+					id="room-night" 
+					placeholder="Price/Night for Peak-Season" 
+					name="room_price_high" 
+					value="<?php if(isset($data['room_price_high'])){ echo $data['room_price_high']; } ?>">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-min" class="col-sm-2 control-label">Charged Pax</label>
+			<div class="col-sm-10<?php if(isset($errors['room_min'])): ?> has-error<?php endif; ?>">
+				<?php if(isset($errors['room_min'])): ?> <label class="control-label"> <?php echo $errors['room_min']; ?> </label> <?php endif; ?>
+				<input type="number" 
+					class="form-control" 
+					id="room-min" 
+					name="room_min" 
+					placeholder="No of allowed person for the price stated above" 
+					value="<?php if(isset($data['room_min'])){ echo $data['room_min']; } ?>">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-max" class="col-sm-2 control-label">Max Pax</label>
+			<div class="col-sm-10<?php if(isset($errors['room_max'])): ?> has-error<?php endif; ?>">
+				<?php if(isset($errors['room_max'])): ?> <label class="control-label"> <?php echo $errors['room_max']; ?> </label> <?php endif; ?>
+				<input type="number" 
+					class="form-control" 
+					id="room-max" 
+					placeholder="Max allowed person" 
+					name="room_max" 
+					value="<?php if(isset($data['room_max'])){ echo $data['room_max']; } ?>">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="room-additional" class="col-sm-2 control-label">Additional Pax</label>
+			<div class="col-sm-10<?php if(isset($errors['room_additional'])): ?> has-error<?php endif; ?>">
+				<?php if(isset($errors['room_additional'])): ?> <label class="control-label"> <?php echo $errors['room_additional']; ?> </label> <?php endif; ?>
+				<input type="text" 
+					class="form-control" 
+					id="room-additional" 
+					placeholder="additional amount per pax beyond the charged pax" 
+					name="room_additional" 
+					price_lowvalue="<?php if(isset($data['room_additional'])){ echo $data['room_additional']; } ?>">
+			</div>
+		</div>
+		<div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success form-control">Create Room</button>
+            </div>
+        </div>
+	</form>
+</div>
